@@ -6,4 +6,13 @@ var server = app.listen(8080,function(){
     console.log('Server On')
 })
 
-require('socket.io')(server)
+var io = require('socket.io')(server)
+
+// Criar a conexão por websocket
+io.on('connection', function(socket){
+    console.log('Usuário conectou')
+
+    socket.on('disconnect', function(){
+        console.log('Usuário desconectiou')
+    })
+})
