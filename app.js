@@ -19,11 +19,22 @@ io.on('connection', function (socket) {
     })
 
     socket.on('msgParaServidor', function (data) {
-        socket.emit('msgParaCliente', 
-        { apelido: data.apelido, mensagem: data.mensagem })
-        
-        socket.broadcast.emit('msgParaCliente', 
-        { apelido: data.apelido, mensagem: data.mensagem })
 
+        // Dialogo
+        socket.emit('msgParaCliente',
+            { apelido: data.apelido, mensagem: data.mensagem })
+
+        socket.broadcast.emit('msgParaCliente',
+            { apelido: data.apelido, mensagem: data.mensagem })
+
+        // Participantes
+        if(parseInt(data.apelido_atualizado_nos_clientes) == 0){
+        
+        socket.emit('participantesParaCliente',
+            { apelido: data.apelido})
+
+        socket.broadcast.emit('participantesParaCliente',
+            { apelido: data.apelido})
+        }
     })
 })
